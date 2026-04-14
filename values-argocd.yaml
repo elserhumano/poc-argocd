@@ -1,0 +1,25 @@
+# Tuneando el cerebro de Argo
+controller:
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+    limits:
+      cpu: 500m
+      memory: 1Gi
+  containerPort: 8082
+  livenessProbe:
+    httpGet:
+      path: /healthz
+      port: 8082 # Popeye quiere puertos con nombre, pero esto arregla el error de "no probe"
+    initialDelaySeconds: 10
+  readinessProbe:
+    httpGet:
+      path: /healthz
+      port: 8082
+
+# Si querés matar el error de Network Policy (POP-1204)
+global:
+  networkPolicies:
+    enabled: true
+
