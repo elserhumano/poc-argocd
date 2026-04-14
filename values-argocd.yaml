@@ -24,7 +24,8 @@ controller:
 
 server:
   # Quitamos el --insecure porque queremos TLS de punta a punta o bien manejado
-  extraArgs: [] 
+  extraArgs:
+    - --insecure 
  
   ingress:
     enabled: true
@@ -35,12 +36,10 @@ server:
       # Dile a Traefik que use HTTPS hacia el backend
       traefik.ingress.kubernetes.io/router.entrypoints: websecure
       traefik.ingress.kubernetes.io/router.tls: "true"
-      # Si usas certificados auto-firmados (muy común en empresas)
-      traefik.ingress.kubernetes.io/service.serversscheme: https
     paths:
       - /
     pathType: Prefix
-    https: true # Ahora sí, puerto 443 al backend
+    https: false # traefik (443) -> argo (80)
 
 repoServer:
   resources:
