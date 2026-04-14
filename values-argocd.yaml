@@ -24,9 +24,8 @@ controller:
 
 server:
   # Quitamos el --insecure porque queremos TLS de punta a punta o bien manejado
-  extraArgs: 
-    - --ingress-tls-passthrough # Esto permite que Argo maneje su propio SSL tras Traefik
-  
+  extraArgs: [] 
+ 
   ingress:
     enabled: true
     ingressClassName: traefik
