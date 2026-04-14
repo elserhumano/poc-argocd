@@ -39,6 +39,7 @@ server:
     paths:
       - /
     pathType: Prefix
+    servicePort: http
     https: false # traefik (443) -> argo (80)
 
 repoServer:
