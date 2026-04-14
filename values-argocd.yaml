@@ -22,11 +22,11 @@ controller:
       path: /healthz
       port: 8082
 
+configs:
+  params:
+    server.insecure: true
+
 server:
-  # Quitamos el --insecure porque queremos TLS de punta a punta o bien manejado
-  extraArgs:
-    - --insecure 
- 
   ingress:
     enabled: true
     ingressClassName: traefik
@@ -39,7 +39,6 @@ server:
     paths:
       - /
     pathType: Prefix
-    servicePort: http
     https: false # traefik (443) -> argo (80)
 
 repoServer:
