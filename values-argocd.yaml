@@ -1,4 +1,7 @@
-# Tuneando el cerebro de Argo
+global:
+  networkPolicies:
+    enabled: true
+
 controller:
   resources:
     requests:
@@ -7,19 +10,33 @@ controller:
     limits:
       cpu: 500m
       memory: 1Gi
+  # Esto arregla lo de los puertos que Popeye criticaba
   containerPort: 8082
   livenessProbe:
     httpGet:
       path: /healthz
-      port: 8082 # Popeye quiere puertos con nombre, pero esto arregla el error de "no probe"
+      port: 8082
     initialDelaySeconds: 10
   readinessProbe:
     httpGet:
       path: /healthz
       port: 8082
 
-# Si querés matar el error de Network Policy (POP-1204)
-global:
-  networkPolicies:
+server:
+  ingress:
     enabled: true
+    ingressClassName: traefik
+    hosts:
+      - argocd.local
+  extraArgs:
+    - --insecure # Clave para que Traefik no se vuelva loco
+
+repoServer:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 200m
+      memory: 512Mi
 
