@@ -1,4 +1,5 @@
 global:
+  domain: argocd.local
   networkPolicies:
     enabled: true
   # Popeye odia los contenedores que no tienen recursos definidos a nivel global
@@ -42,6 +43,7 @@ server:
     ingressClassName: traefik
     hosts:
       - argocd.local
+    hostname: argocd.local
     annotations:
       kubernetes.io/ingress.class: traefik
       #traefik.ingress.kubernetes.io/router.entrypoints: websecure
