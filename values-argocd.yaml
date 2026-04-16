@@ -11,6 +11,10 @@ controller:
       cpu: 500m
       memory: 1Gi
 
+configs:
+  params:
+    server.insecure: true
+
 # Configuración del Server
 server:
   extraArgs:
