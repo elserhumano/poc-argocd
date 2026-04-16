@@ -21,12 +21,6 @@ controller:
     httpGet:
       path: /healthz
       port: 8082
-  pdb:
-    enabled: true
-    minAvailable: 1
-  serviceAccount:
-    automountServiceAccountToken: true
-
 
 configs:
   params:
