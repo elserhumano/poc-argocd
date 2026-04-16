@@ -23,6 +23,11 @@ controller:
     readOnlyRootFilesystem: true
     runAsNonRoot: true
 
+# Config
+configs:
+  params:
+    server.insecure: true
+
 # Configuración del Server
 server:
   resources:
