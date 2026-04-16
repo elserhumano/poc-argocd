@@ -37,7 +37,7 @@ server:
       memory: 512Mi
   containerSecurityContext:
     allowPrivilegeEscalation: false
-    readOnlyRootFilesystem: fakse
+    readOnlyRootFilesystem: false
   ingress:
     enabled: true
     ingressClassName: traefik
