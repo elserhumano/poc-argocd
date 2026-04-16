@@ -1,7 +1,11 @@
 global:
   networkPolicies:
     enabled: true
+  # Popeye odia los contenedores que no tienen recursos definidos a nivel global
+  logging:
+    level: info
 
+# Configuración del Controller
 controller:
   resources:
     requests:
@@ -10,37 +14,41 @@ controller:
     limits:
       cpu: 500m
       memory: 1Gi
-  # Esto arregla lo de los puertos que Popeye criticaba
-  containerPort: 8082
-  livenessProbe:
-    httpGet:
-      path: /healthz
-      port: 8082
-    initialDelaySeconds: 10
-  readinessProbe:
-    httpGet:
-      path: /healthz
-      port: 8082
+  # Popeye pide SecurityContext para evitar escalada de privilegios
+  containerSecurityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - ALL
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
 
-configs:
-  params:
-    server.insecure: true
-
+# Configuración del Server
 server:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 200m
+      memory: 512Mi
+  containerSecurityContext:
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: true
   ingress:
     enabled: true
     ingressClassName: traefik
     hosts:
       - argocd.local
     annotations:
-      # Dile a Traefik que use HTTPS hacia el backend
       traefik.ingress.kubernetes.io/router.entrypoints: websecure
       traefik.ingress.kubernetes.io/router.tls: "true"
     paths:
       - /
     pathType: Prefix
-    https: false # traefik (443) -> argo (80)
+    https: false
 
+# El Repo Server suele ser un punto ciego que baja puntos
 repoServer:
   resources:
     requests:
@@ -49,4 +57,31 @@ repoServer:
     limits:
       cpu: 200m
       memory: 512Mi
+  containerSecurityContext:
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: true
+
+# ¡IMPORTANTE! Redis suele venir "desnudo" en la instalación default
+redis:
+  enabled: true
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 200m
+      memory: 256Mi
+  containerSecurityContext:
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: true
+
+# Application Set Controller (si lo usas)
+applicationSet:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 200m
+      memory: 256Mi
 
