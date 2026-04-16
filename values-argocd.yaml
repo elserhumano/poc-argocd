@@ -1,10 +1,5 @@
 global:
   domain: argocd.local
-  networkPolicies:
-    enabled: true
-  # Popeye odia los contenedores que no tienen recursos definidos a nivel global
-  logging:
-    level: info
 
 # Configuración del Controller
 controller:
@@ -27,9 +22,6 @@ server:
     limits:
       cpu: 200m
       memory: 512Mi
-  containerSecurityContext:
-    allowPrivilegeEscalation: false
-    readOnlyRootFilesystem: false
   ingress:
     enabled: true
     ingressClassName: traefik
@@ -55,9 +47,6 @@ repoServer:
     limits:
       cpu: 200m
       memory: 512Mi
-  containerSecurityContext:
-    allowPrivilegeEscalation: false
-    readOnlyRootFilesystem: true
 
 # ¡IMPORTANTE! Redis suele venir "desnudo" en la instalación default
 redis:
@@ -69,9 +58,6 @@ redis:
     limits:
       cpu: 200m
       memory: 256Mi
-  containerSecurityContext:
-    allowPrivilegeEscalation: false
-    readOnlyRootFilesystem: true
 
 # Application Set Controller (si lo usas)
 applicationSet:
