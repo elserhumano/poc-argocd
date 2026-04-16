@@ -15,14 +15,6 @@ controller:
     limits:
       cpu: 500m
       memory: 1Gi
-  # Popeye pide SecurityContext para evitar escalada de privilegios
-  containerSecurityContext:
-    allowPrivilegeEscalation: false
-    capabilities:
-      drop:
-        - ALL
-    readOnlyRootFilesystem: true
-    runAsNonRoot: true
 
 # Configuración del Server
 server:
