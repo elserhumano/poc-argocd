@@ -23,13 +23,10 @@ controller:
     readOnlyRootFilesystem: true
     runAsNonRoot: true
 
-# Config
-configs:
-  params:
-    server.insecure: true
-
 # Configuración del Server
 server:
+  extraArgs:
+    - --insecure
   resources:
     requests:
       cpu: 100m
@@ -46,12 +43,13 @@ server:
     hosts:
       - argocd.local
     annotations:
-      traefik.ingress.kubernetes.io/router.entrypoints: websecure
-      traefik.ingress.kubernetes.io/router.tls: "true"
+      kubernetes.io/ingress.class: traefik
+      #traefik.ingress.kubernetes.io/router.entrypoints: websecure
+      #traefik.ingress.kubernetes.io/router.tls: "true"
     paths:
       - /
     pathType: Prefix
-    https: false
+    #https: false
 
 # El Repo Server suele ser un punto ciego que baja puntos
 repoServer:
