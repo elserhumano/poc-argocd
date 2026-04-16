@@ -49,7 +49,7 @@ server:
     paths:
       - /
     pathType: Prefix
-    #https: false
+    https: false
 
 # El Repo Server suele ser un punto ciego que baja puntos
 repoServer:
