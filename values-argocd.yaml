@@ -37,7 +37,7 @@ server:
       memory: 512Mi
   containerSecurityContext:
     allowPrivilegeEscalation: false
-    readOnlyRootFilesystem: true
+    readOnlyRootFilesystem: fakse
   ingress:
     enabled: true
     ingressClassName: traefik
@@ -46,7 +46,7 @@ server:
     hostname: argocd.local
     annotations:
       kubernetes.io/ingress.class: traefik
-      traefik.ingress.kubernetes.io/service.serversschema: http
+      traefik.ingress.kubernetes.io/service.serversscheme: http
       #traefik.ingress.kubernetes.io/router.entrypoints: websecure
       #traefik.ingress.kubernetes.io/router.tls: "true"
     paths:
